@@ -1,0 +1,61 @@
+{
+  "id": "en",
+  "name": "English",
+  "grid": [
+    "ITLISASAMPM",
+    "ACQUARTERDC",
+    "TWENTYFIVEX",
+    "HALFSTENFTO",
+    "PASTERUNINE",
+    "ONESIXTHREE",
+    "FOURFIVETWO",
+    "EIGHTELEVEN",
+    "SEVENTWELVE",
+    "TENSEOCLOCK"
+  ],
+  "words": {
+    "IT": [[0, 0, 2]],
+    "IS": [[0, 3, 2]],
+    "A": [[1, 0, 1]],
+    "QUARTER": [[1, 2, 7]],
+    "TWENTY": [[2, 0, 6]],
+    "FIVE_M": [[2, 6, 4]],
+    "HALF": [[3, 0, 4]],
+    "TEN_M": [[3, 5, 3]],
+    "TO": [[3, 9, 2]],
+    "PAST": [[4, 0, 4]],
+    "NINE": [[4, 7, 4]],
+    "ONE": [[5, 0, 3]],
+    "SIX": [[5, 3, 3]],
+    "THREE": [[5, 6, 5]],
+    "FOUR": [[6, 0, 4]],
+    "FIVE": [[6, 4, 4]],
+    "TWO": [[6, 8, 3]],
+    "EIGHT": [[7, 0, 5]],
+    "ELEVEN": [[7, 5, 6]],
+    "SEVEN": [[8, 0, 5]],
+    "TWELVE": [[8, 5, 6]],
+    "TEN": [[9, 0, 3]],
+    "OCLOCK": [[9, 5, 6]]
+  },
+  "hours": {
+    "name": [
+      ["TWELVE"], ["ONE"], ["TWO"], ["THREE"], ["FOUR"], ["FIVE"],
+      ["SIX"], ["SEVEN"], ["EIGHT"], ["NINE"], ["TEN"], ["ELEVEN"]
+    ]
+  },
+  "steps": [
+    ["IT", "IS", "@this", "OCLOCK"],
+    ["IT", "IS", "FIVE_M", "PAST", "@this"],
+    ["IT", "IS", "TEN_M", "PAST", "@this"],
+    ["IT", "IS", "A", "QUARTER", "PAST", "@this"],
+    ["IT", "IS", "TWENTY", "PAST", "@this"],
+    ["IT", "IS", "TWENTY", "FIVE_M", "PAST", "@this"],
+    ["IT", "IS", "HALF", "PAST", "@this"],
+    ["IT", "IS", "TWENTY", "FIVE_M", "TO", "@next"],
+    ["IT", "IS", "TWENTY", "TO", "@next"],
+    ["IT", "IS", "A", "QUARTER", "TO", "@next"],
+    ["IT", "IS", "TEN_M", "TO", "@next"],
+    ["IT", "IS", "FIVE_M", "TO", "@next"]
+  ]
+}

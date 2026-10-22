@@ -1,0 +1,97 @@
+{
+  "id": "de",
+  "name": "Deutsch",
+  "baseName": "viertel nach drei, viertel vor vier",
+  "grid": [
+    "ESKISTAFÜNF",
+    "ZEHNZWANZIG",
+    "DREIVIERTEL",
+    "VORFUNKNACH",
+    "HALBAELFÜNF",
+    "EINSXAMZWEI",
+    "DREIPMJVIER",
+    "SECHSNLACHT",
+    "SIEBENZWÖLF",
+    "ZEHNEUNKUHR"
+  ],
+  "words": {
+    "ES": [[0, 0, 2]],
+    "IST": [[0, 3, 3]],
+    "FUENF_M": [[0, 7, 4]],
+    "ZEHN_M": [[1, 0, 4]],
+    "ZWANZIG": [[1, 4, 7]],
+    "DREIVIERTEL": [[2, 0, 11]],
+    "VIERTEL": [[2, 4, 7]],
+    "VOR": [[3, 0, 3]],
+    "NACH": [[3, 7, 4]],
+    "HALB": [[4, 0, 4]],
+    "ELF": [[4, 5, 3]],
+    "FUENF": [[4, 7, 4]],
+    "EINS": [[5, 0, 4]],
+    "EIN": [[5, 0, 3]],
+    "ZWEI": [[5, 7, 4]],
+    "DREI": [[6, 0, 4]],
+    "VIER": [[6, 7, 4]],
+    "SECHS": [[7, 0, 5]],
+    "ACHT": [[7, 7, 4]],
+    "SIEBEN": [[8, 0, 6]],
+    "ZWOELF": [[8, 6, 5]],
+    "ZEHN": [[9, 0, 4]],
+    "NEUN": [[9, 3, 4]],
+    "UHR": [[9, 8, 3]]
+  },
+  "hours": {
+    "name": [
+      ["ZWOELF"],
+      ["EINS"],
+      ["ZWEI"],
+      ["DREI"],
+      ["VIER"],
+      ["FUENF"],
+      ["SECHS"],
+      ["SIEBEN"],
+      ["ACHT"],
+      ["NEUN"],
+      ["ZEHN"],
+      ["ELF"]
+    ],
+    "uhr": [
+      ["ZWOELF"],
+      ["EIN"],
+      ["ZWEI"],
+      ["DREI"],
+      ["VIER"],
+      ["FUENF"],
+      ["SECHS"],
+      ["SIEBEN"],
+      ["ACHT"],
+      ["NEUN"],
+      ["ZEHN"],
+      ["ELF"]
+    ]
+  },
+  "steps": [
+    ["ES", "IST", "@this.uhr", "UHR"],
+    ["ES", "IST", "FUENF_M", "NACH", "@this"],
+    ["ES", "IST", "ZEHN_M", "NACH", "@this"],
+    ["ES", "IST", "VIERTEL", "NACH", "@this"],
+    ["ES", "IST", "ZWANZIG", "NACH", "@this"],
+    ["ES", "IST", "FUENF_M", "VOR", "HALB", "@next"],
+    ["ES", "IST", "HALB", "@next"],
+    ["ES", "IST", "FUENF_M", "NACH", "HALB", "@next"],
+    ["ES", "IST", "ZWANZIG", "VOR", "@next"],
+    ["ES", "IST", "VIERTEL", "VOR", "@next"],
+    ["ES", "IST", "ZEHN_M", "VOR", "@next"],
+    ["ES", "IST", "FUENF_M", "VOR", "@next"]
+  ],
+  "variants": [
+    {
+      "id": "regional",
+      "name": "viertel vier, dreiviertel vier",
+      "steps": {
+        "3": ["ES", "IST", "VIERTEL", "@next"],
+        "9": ["ES", "IST", "DREIVIERTEL", "@next"]
+      }
+    }
+  ]
+}

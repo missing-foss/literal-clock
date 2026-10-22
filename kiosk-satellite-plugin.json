@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "id": "literal-clock",
+  "name": "Literal Clock",
+  "version": "0.1.0",
+  "apiVersion": 1,
+  "minAndroidSdk": 24,
+  "entryClass": "org.missing_foss.literalclock.LiteralClockPlugin",
+  "description": "A word clock screensaver: a grid of letters where the words that tell the time light up, with four corner dots for the minutes in between. In English, French, German, Dutch, Italian, Spanish and Simplified Chinese.",
+  "author": "missing-foss",
+  "license": "Apache-2.0",
+  "capabilities": [
+    "screensaver"
+  ],
+  "icon": "icon.png",
+  "settings": [
+    {
+      "key": "language",
+      "type": "select",
+      "title": "Language",
+      "default": "English",
+      "options": [
+        "English",
+        "Français",
+        "Deutsch",
+        "Nederlands",
+        "Italiano",
+        "Español",
+        "简体中文"
+      ],
+      "group": "Clock",
+      "description": "The language the time is spelled in."
+    },
+    {
+      "key": "variant_de",
+      "type": "select",
+      "title": "Quarter hours",
+      "default": "viertel nach drei, viertel vor vier",
+      "options": [
+        "viertel nach drei, viertel vor vier",
+        "viertel vier, dreiviertel vier"
+      ],
+      "group": "Clock",
+      "description": "How the German clock says a quarter past and a quarter to.",
+      "visibleWhen": {
+        "key": "language",
+        "equals": "Deutsch"
+      }
+    },
+    {
+      "key": "variant_it",
+      "type": "select",
+      "title": "Midday and midnight",
+      "default": "mezzogiorno, mezzanotte",
+      "options": [
+        "mezzogiorno, mezzanotte",
+        "sono le dodici"
+      ],
+      "group": "Clock",
+      "description": "How the Italian clock says twelve o'clock.",
+      "visibleWhen": {
+        "key": "language",
+        "equals": "Italiano"
+      }
+    },
+    {
+      "key": "variant_es",
+      "type": "select",
+      "title": "On the hour",
+      "default": "son las tres",
+      "options": [
+        "son las tres",
+        "son las tres en punto"
+      ],
+      "group": "Clock",
+      "description": "Whether the Spanish clock adds EN PUNTO on the hour.",
+      "visibleWhen": {
+        "key": "language",
+        "equals": "Español"
+      }
+    },
+    {
+      "key": "variant_zh_Hans",
+      "type": "select",
+      "title": "Quarters and five to",
+      "default": "一刻, 三刻",
+      "options": [
+        "一刻, 三刻",
+        "四十五分",
+        "差五分"
+      ],
+      "group": "Clock",
+      "description": "一刻 and 三刻, or 四十五分 at a quarter to, or 差五分 at five to the hour.",
+      "visibleWhen": {
+        "key": "language",
+        "equals": "简体中文"
+      }
+    },
+    {
+      "key": "litColor",
+      "type": "color",
+      "title": "Lit letters",
+      "default": "#FFFFFF",
+      "group": "Clock",
+      "description": "The letters that tell the time, and the lit corner dots."
+    },
+    {
+      "key": "unlitColor",
+      "type": "color",
+      "title": "Unlit letters",
+      "default": "#262626",
+      "group": "Clock",
+      "description": "Every other letter, and the unlit corner dots."
+    },
+    {
+      "key": "backgroundColor",
+      "type": "color",
+      "title": "Background",
+      "default": "#000000",
+      "group": "Clock"
+    },
+    {
+      "key": "minuteDots",
+      "type": "boolean",
+      "title": "Minute dots",
+      "default": true,
+      "group": "Clock",
+      "description": "One corner dot for each minute past the five-minute step, clockwise from top left."
+    },
+    {
+      "key": "size",
+      "type": "number",
+      "title": "Size",
+      "default": 85,
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "group": "Clock",
+      "description": "How much of the screen the clock fills."
+    },
+    {
+      "key": "drift",
+      "type": "boolean",
+      "title": "Slow drift",
+      "default": true,
+      "group": "Clock",
+      "description": "Moves the clock a little each minute, round a small circle once an hour."
+    }
+  ],
+  "groups": [
+    {
+      "title": "Clock"
+    }
+  ]
+}

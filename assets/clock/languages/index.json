@@ -1,0 +1,9 @@
+[
+  { "id": "en", "name": "English" },
+  { "id": "fr", "name": "Français" },
+  { "id": "de", "name": "Deutsch" },
+  { "id": "nl", "name": "Nederlands" },
+  { "id": "it", "name": "Italiano" },
+  { "id": "es", "name": "Español" },
+  { "id": "zh-Hans", "name": "简体中文" }
+]

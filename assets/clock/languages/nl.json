@@ -1,0 +1,71 @@
+{
+  "id": "nl",
+  "name": "Nederlands",
+  "grid": [
+    "HETKISAVIJF",
+    "TIENBTZVOOR",
+    "OVERMEKWART",
+    "HALFSPWOVER",
+    "VOORTHGEENS",
+    "TWEEPVCDRIE",
+    "VIERVIJFZES",
+    "ZEVENONEGEN",
+    "ACHTTIENELF",
+    "TWAALFPMUUR"
+  ],
+  "words": {
+    "HET": [[0, 0, 3]],
+    "IS": [[0, 4, 2]],
+    "VIJF_M": [[0, 7, 4]],
+    "TIEN_M": [[1, 0, 4]],
+    "VOOR_HALF": [[1, 7, 4]],
+    "OVER_HALF": [[2, 0, 4]],
+    "KWART": [[2, 6, 5]],
+    "HALF": [[3, 0, 4]],
+    "OVER": [[3, 7, 4]],
+    "VOOR": [[4, 0, 4]],
+    "EEN": [[4, 7, 3]],
+    "TWEE": [[5, 0, 4]],
+    "DRIE": [[5, 7, 4]],
+    "VIER": [[6, 0, 4]],
+    "VIJF": [[6, 4, 4]],
+    "ZES": [[6, 8, 3]],
+    "ZEVEN": [[7, 0, 5]],
+    "NEGEN": [[7, 6, 5]],
+    "ACHT": [[8, 0, 4]],
+    "TIEN": [[8, 4, 4]],
+    "ELF": [[8, 8, 3]],
+    "TWAALF": [[9, 0, 6]],
+    "UUR": [[9, 8, 3]]
+  },
+  "hours": {
+    "name": [
+      ["TWAALF"],
+      ["EEN"],
+      ["TWEE"],
+      ["DRIE"],
+      ["VIER"],
+      ["VIJF"],
+      ["ZES"],
+      ["ZEVEN"],
+      ["ACHT"],
+      ["NEGEN"],
+      ["TIEN"],
+      ["ELF"]
+    ]
+  },
+  "steps": [
+    ["HET", "IS", "@this", "UUR"],
+    ["HET", "IS", "VIJF_M", "OVER", "@this"],
+    ["HET", "IS", "TIEN_M", "OVER", "@this"],
+    ["HET", "IS", "KWART", "OVER", "@this"],
+    ["HET", "IS", "TIEN_M", "VOOR_HALF", "HALF", "@next"],
+    ["HET", "IS", "VIJF_M", "VOOR_HALF", "HALF", "@next"],
+    ["HET", "IS", "HALF", "@next"],
+    ["HET", "IS", "VIJF_M", "OVER_HALF", "HALF", "@next"],
+    ["HET", "IS", "TIEN_M", "OVER_HALF", "HALF", "@next"],
+    ["HET", "IS", "KWART", "VOOR", "@next"],
+    ["HET", "IS", "TIEN_M", "VOOR", "@next"],
+    ["HET", "IS", "VIJF_M", "VOOR", "@next"]
+  ]
+}
