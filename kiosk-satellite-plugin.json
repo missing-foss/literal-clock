@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "literal-clock",
   "name": "Literal Clock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "org.missing_foss.literalclock.LiteralClockPlugin",

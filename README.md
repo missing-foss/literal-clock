@@ -30,9 +30,29 @@ Under **Plugin Manager → Literal Clock**:
 
 Choose **Literal Clock** under **Screensaver → Screensaver mode**. Kiosk Satellite decides when the screensaver shows; the clock redraws once a minute and does nothing in between. The letters use the system font, so no font is shipped.
 
-## Install
+## Installation
+
+### Community Plugins (Recommended)
+
+Literal Clock is listed in [Community Plugins](https://kiosksatellite.com/plugins/). Use the button below to open it in your Kiosk Satellite and install it.
+
+[![Install in Kiosk Satellite](https://kiosksatellite.com/img/badges/plugin-add.svg)](https://kiosksatellite.com/redirect/plugin/?repository=missing-foss/literal-clock)
+
+Or search for `Literal Clock` in **Settings > Plugin Manager > Browse plugins** in Kiosk Satellite.
+
+### Manual
+
+1. Open **Settings > Plugin Manager** in Kiosk Satellite and turn on **Enable Plugins**.
+2. Choose **Add plugin**, paste `https://github.com/missing-foss/literal-clock` and choose **Preview**.
+3. Review the plugin and choose **Trust and install**.
+
+### From a ZIP
 
 For testing, build the ZIP (below) and use **Plugin Manager → Developer Tools → Install from ZIP**.
+
+## Data
+
+Literal Clock sends no data anywhere: it reads only its own files and makes no network request.
 
 ## Develop
 

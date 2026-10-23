@@ -1,43 +1,65 @@
+# The GitHub release: on a pushed v* tag, test and build the plugin, then
+# attach the manifest, the ZIP and its checksum to a draft release for that
+# tag. A person checks the draft and publishes it. Kiosk Satellite takes
+# only assets uploaded by this workflow, so they are never attached by hand.
 name: Release
 on:
-  release:
-    types: [published]
+  push:
+    tags: ['v*']
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Validate release
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check the tag
         run: |
           python3 - <<'PY'
+          import json
           import os
 
           if os.environ['GITHUB_REF_TYPE'] != 'tag':
               raise SystemExit('Run this workflow on a release tag, not a branch.')
+          tag = os.environ['GITHUB_REF_NAME']
+          with open('kiosk-satellite-plugin.json', encoding='utf-8') as f:
+              version = json.load(f)['version']
+          if tag != f'v{version}':
+              raise SystemExit(f'The tag {tag} is not the manifest version {version}: '
+                               f'tag v{version}, or change the manifest first.')
           PY
-          gh release view "$GITHUB_REF_NAME"
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: temurin
           java-version: '21'
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v4
+      # The runner image's own Android SDK, so no action beyond GitHub's.
       - name: Install Android build tools
-        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+        run: |
+          test -n "$ANDROID_HOME" || { echo '::error::ANDROID_HOME is not set on this runner image.'; exit 1; }
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
       - name: Test
         run: python3 tools/test.py
       - name: Build
         run: python3 tools/build.py --android-platform 35 --version "${GITHUB_REF_NAME#v}"
-      - name: Attach plugin assets to the release
+      - name: Attach the assets to the draft release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "$GITHUB_REF_NAME" \
-            dist/*.zip \
-            dist/*.zip.sha256 \
-            dist/kiosk-satellite-plugin.json --clobber
+          # Drafts are found only by listing: the release-by-tag lookup
+          # returns published releases alone.
+          drafts=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases" \
+            --jq ".[] | select(.tag_name == \"$GITHUB_REF_NAME\") | .draft")
+          if grep -qx false <<<"$drafts"; then
+            echo "::error::$GITHUB_REF_NAME is already published; its assets are left as they are."
+            exit 1
+          fi
+          assets=(dist/*.zip dist/*.zip.sha256 dist/kiosk-satellite-plugin.json)
+          if [ -z "$drafts" ]; then
+            gh release create "$GITHUB_REF_NAME" --draft --verify-tag \
+              --title "$GITHUB_REF_NAME" --notes '' "${assets[@]}"
+          else
+            gh release upload "$GITHUB_REF_NAME" "${assets[@]}" --clobber
+          fi
