@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import me.jxl.kiosk.plugins.PluginHost;
 import org.missing_foss.literalclock.LiteralClockPlugin;
@@ -28,6 +30,12 @@ public final class LiteralClockTest {
         s.put("size", 85.0);
         s.put("drift", true);
         return s;
+    }
+
+    static Map<String, Object> row(Object language) {
+        Map<String, Object> row = new HashMap<>();
+        row.put("language", language);
+        return row;
     }
 
     public static void main(String[] args) throws Exception {
@@ -67,6 +75,30 @@ public final class LiteralClockTest {
         plugin.configure(settings);
         assert "viertel vier, dreiviertel vier".equals(host.options.get("variant_de")) : "a usage setting reaches the page";
         assert !host.options.containsKey("variantless") : "other keys do not";
+
+        // The carousel: off by default; its rows reach the page as one name
+        // per line, in order, repeats kept; a malformed row is left out.
+        plugin.configure(defaults());
+        assert Boolean.FALSE.equals(host.options.get("carousel")) : "the carousel is off by default";
+        assert "".equals(host.options.get("carouselLanguages")) && "1 hour".equals(host.options.get("carouselEvery"));
+        settings = defaults();
+        settings.put("carousel", true);
+        settings.put("carouselEvery", "5 minutes");
+        settings.put("carouselLanguages", Arrays.asList(row("Deutsch"), row("Français"), "not a row", row(42),
+                row("bad\nname"), row("Deutsch")));
+        plugin.configure(settings);
+        assert Boolean.TRUE.equals(host.options.get("carousel"));
+        assert "Deutsch\nFrançais\nDeutsch".equals(host.options.get("carouselLanguages")) : host.options.get("carouselLanguages");
+        assert "5 minutes".equals(host.options.get("carouselEvery"));
+        settings.put("carouselEvery", "weekly");
+        settings.put("carouselLanguages", "not a list");
+        plugin.configure(settings);
+        assert "1 hour".equals(host.options.get("carouselEvery")) : "an unknown interval is an hour";
+        assert "".equals(host.options.get("carouselLanguages")) : "a malformed list is no language";
+        for (Object value : host.options.values()) {
+            assert value == null || value instanceof String || value instanceof Boolean || value instanceof Number
+                    : "the page takes scalar values only: " + value;
+        }
 
         plugin.stop();
         int before = host.publications;

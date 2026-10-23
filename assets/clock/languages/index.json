@@ -5,5 +5,8 @@
   { "id": "nl", "name": "Nederlands" },
   { "id": "it", "name": "Italiano" },
   { "id": "es", "name": "Español" },
+  { "id": "pt", "name": "Português" },
+  { "id": "sr-Latn", "name": "Srpski (latinica)" },
+  { "id": "sr-Cyrl", "name": "Српски (ћирилица)" },
   { "id": "zh-Hans", "name": "简体中文" }
 ]

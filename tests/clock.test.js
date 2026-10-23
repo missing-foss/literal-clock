@@ -139,3 +139,76 @@ test('each language with usage variants has its setting, and only those do', () 
     assert.deepStrictEqual(setting.visibleWhen, { key: 'language', equals: language.name }, `${language.id}: shown only for its language`);
   }
 });
+
+// The carousel: which language shows when, from the time alone.
+test('the carousel turns on the clock, from the local date, in list order', () => {
+  const names = ['English', 'Français', 'Deutsch'];
+  const pick = (every, ...when) => WordClock.carouselName(names, every, new Date(...when));
+
+  // Every hour: the hour after is the next language, in the list's order.
+  const h = ['English', 'Français', 'Deutsch'].indexOf(pick('1 hour', 2026, 9, 24, 13, 0));
+  assert.strictEqual(pick('1 hour', 2026, 9, 24, 14, 0), names[(h + 1) % 3]);
+  assert.strictEqual(pick('1 hour', 2026, 9, 24, 15, 0), names[(h + 2) % 3]);
+  assert.strictEqual(pick('1 hour', 2026, 9, 24, 13, 59, 59), pick('1 hour', 2026, 9, 24, 13, 0), 'the same all hour');
+  // Five languages, so that 24 hours are not a whole number of turns.
+  const five = ['A', 'B', 'C', 'D', 'E'];
+  const late = five.indexOf(WordClock.carouselName(five, '1 hour', new Date(2026, 9, 24, 23, 59)));
+  assert.strictEqual(WordClock.carouselName(five, '1 hour', new Date(2026, 9, 25, 0, 0)), five[(late + 1) % 5],
+    'midnight is the next hour too');
+
+  // Every five minutes: changes at :05, not before.
+  assert.strictEqual(pick('5 minutes', 2026, 9, 24, 12, 4, 59), pick('5 minutes', 2026, 9, 24, 12, 0));
+  assert.notStrictEqual(pick('5 minutes', 2026, 9, 24, 12, 5), pick('5 minutes', 2026, 9, 24, 12, 4, 59));
+  const m = names.indexOf(pick('5 minutes', 2026, 9, 24, 12, 0));
+  assert.strictEqual(pick('5 minutes', 2026, 9, 24, 12, 5), names[(m + 1) % 3]);
+
+  // Every day: changes at local midnight, not before.
+  assert.strictEqual(pick('1 day', 2026, 9, 24, 23, 59), pick('1 day', 2026, 9, 24, 0, 0));
+  const d = names.indexOf(pick('1 day', 2026, 9, 24, 0, 0));
+  assert.strictEqual(pick('1 day', 2026, 9, 25, 0, 0), names[(d + 1) % 3]);
+
+  // A restart lands on the same language: the answer depends on the time only.
+  assert.strictEqual(pick('1 hour', 2026, 9, 24, 13, 30), pick('1 hour', 2026, 9, 24, 13, 30));
+  // Anything but the three intervals is an hour.
+  assert.strictEqual(pick('weekly', 2026, 9, 24, 13, 30), pick('1 hour', 2026, 9, 24, 13, 30));
+  assert.strictEqual(WordClock.carouselName([], '1 hour', new Date()), null, 'no language: none');
+  assert.strictEqual(WordClock.carouselName(['Italiano'], '5 minutes', new Date(2026, 9, 24, 7, 35)), 'Italiano');
+});
+
+test('the carousel follows the local date across a DST change: one day is one step', () => {
+  // Days counted from the local date, so the 23- and 25-hour days of a DST
+  // change are still one day each, in any time zone the tests run in.
+  const names = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  let previous = names.indexOf(WordClock.carouselName(names, '1 day', new Date(2026, 0, 1, 12, 0)));
+  for (let day = 2; day <= 366; day++) {
+    const today = names.indexOf(WordClock.carouselName(names, '1 day', new Date(2026, 0, day, 0, 0)));
+    assert.strictEqual(today, (previous + 1) % names.length, `2026 day ${day}`);
+    previous = today;
+  }
+});
+
+test('the carousel lists only languages with a file, in the order given, repeats kept', () => {
+  const known = ['English', 'Français', 'Deutsch'];
+  assert.deepStrictEqual(WordClock.carouselNames('English\nKlingon\nDeutsch\nEnglish', known), ['English', 'Deutsch', 'English']);
+  assert.deepStrictEqual(WordClock.carouselNames('', known), []);
+  assert.deepStrictEqual(WordClock.carouselNames(undefined, known), [], 'nothing passed: none');
+  assert.deepStrictEqual(WordClock.carouselNames('Klingon', known), [], 'only unknown names: none, the Language setting applies');
+});
+
+test('the carousel setting offers the same languages as the Language setting', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'kiosk-satellite-plugin.json'), 'utf8'));
+  const language = manifest.settings.find((s) => s.key === 'language');
+  const list = manifest.settings.find((s) => s.key === 'carouselLanguages');
+  const every = manifest.settings.find((s) => s.key === 'carouselEvery');
+  const on = manifest.settings.find((s) => s.key === 'carousel');
+  assert.strictEqual(on.type, 'boolean');
+  assert.strictEqual(on.default, false, 'off by default');
+  assert.strictEqual(list.type, 'list');
+  assert.deepStrictEqual(list.fields.map((f) => f.key), ['language']);
+  assert.deepStrictEqual(list.fields[0].options, language.options);
+  assert.deepStrictEqual(every.options, ['5 minutes', '1 hour', '1 day']);
+  assert.strictEqual(every.default, '1 hour');
+  for (const s of [list, every]) assert.deepStrictEqual(s.visibleWhen, { key: 'carousel', equals: true });
+  const keys = manifest.settings.map((s) => s.key);
+  assert.ok(keys.indexOf('carousel') < keys.indexOf('carouselLanguages'), 'visibleWhen names a setting declared before');
+});

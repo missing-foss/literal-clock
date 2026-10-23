@@ -14,7 +14,10 @@ html, body {
   /* --drift-x and --drift-y are fractions of a cell, set once a minute. */
   transform: translate(-50%, -50%) translate(calc(var(--cell, 40px) * var(--drift-x, 0)), calc(var(--cell, 40px) * var(--drift-y, 0)));
   padding: var(--cell, 40px);
+  transition: opacity 0.6s;
 }
+/* The carousel's change of language: out, then in, 0.6 s each way. */
+#face.fading { opacity: 0; }
 #grid {
   display: grid;
   grid-template-columns: repeat(var(--columns, 11), var(--cell, 40px));

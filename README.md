@@ -14,7 +14,12 @@ A word clock screensaver for [Kiosk Satellite](https://github.com/jxlarrea/kiosk
 | Nederlands | 11×10 | |
 | Italiano | 11×12 | *mezzogiorno, mezzanotte* (default) or *sono le dodici* |
 | Español | 11×11 | *son las tres* (default) or *son las tres en punto* |
+| Português † | 16×9 | *Portugal (um quarto, menos)* (default) or *Brasil (quinze, para as)* |
+| Srpski (latinica) † | 15×9 | |
+| Српски (ћирилица) † | 15×9 | |
 | 简体中文 | 6×6 | *一刻, 三刻* (default), *四十五分* or *差五分* |
+
+† Unverified: the wording still waits for a native speaker's check.
 
 A language is data, not code: a grid, the words as cells, and a sentence for each five minutes. [Adding a language](docs/adding-a-language.md) says how.
 
@@ -23,6 +28,7 @@ A language is data, not code: a grid, the words as cells, and a sentence for eac
 Under **Plugin Manager → Literal Clock**:
 
 - **Language**, and that language's usage choice, if it has one;
+- **Language carousel**: several languages in turn, in the order of the **Carousel languages** list (a language listed twice shows twice as often), changing every five minutes, on the hour or at midnight (**Change every**, one hour by default), with a short fade. Each language keeps its own usage choice. Off, or with no language in the list, **Language** applies;
 - **Lit letters**, **Unlit letters** and **Background** colours;
 - **Minute dots**: the corner dots, one for each minute past the five-minute step, clockwise from the top left;
 - **Size**: how much of the screen the clock fills;

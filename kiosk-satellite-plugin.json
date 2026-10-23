@@ -2,11 +2,11 @@
   "schemaVersion": 1,
   "id": "literal-clock",
   "name": "Literal Clock",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "org.missing_foss.literalclock.LiteralClockPlugin",
-  "description": "A word clock screensaver: a grid of letters where the words that tell the time light up, with four corner dots for the minutes in between. In English, French, German, Dutch, Italian, Spanish and Simplified Chinese.",
+  "description": "A word clock screensaver: a grid of letters where the words that tell the time light up, with four corner dots for the minutes in between. In English, French, German, Dutch, Italian, Spanish, Portuguese, Serbian (Latin and Cyrillic) and Simplified Chinese, one at a time or several in turn.",
   "author": "missing-foss",
   "license": "Apache-2.0",
   "capabilities": [
@@ -26,6 +26,9 @@
         "Nederlands",
         "Italiano",
         "Español",
+        "Português",
+        "Srpski (latinica)",
+        "Српски (ћирилица)",
         "简体中文"
       ],
       "group": "Clock",
@@ -80,6 +83,22 @@
       }
     },
     {
+      "key": "variant_pt",
+      "type": "select",
+      "title": "Portugal or Brazil",
+      "default": "Portugal (um quarto, menos)",
+      "options": [
+        "Portugal (um quarto, menos)",
+        "Brasil (quinze, para as)"
+      ],
+      "group": "Clock",
+      "description": "European or Brazilian Portuguese: a quarter past and the minutes to the hour.",
+      "visibleWhen": {
+        "key": "language",
+        "equals": "Português"
+      }
+    },
+    {
       "key": "variant_zh_Hans",
       "type": "select",
       "title": "Quarters and five to",
@@ -94,6 +113,64 @@
       "visibleWhen": {
         "key": "language",
         "equals": "简体中文"
+      }
+    },
+    {
+      "key": "carousel",
+      "type": "boolean",
+      "title": "Language carousel",
+      "default": false,
+      "group": "Clock",
+      "description": "Shows several languages in turn. Off, or with no language listed, the Language setting applies."
+    },
+    {
+      "key": "carouselLanguages",
+      "type": "list",
+      "title": "Carousel languages",
+      "addTitle": "Add a language",
+      "default": [],
+      "maxItems": 10,
+      "group": "Clock",
+      "description": "The languages in turn, in this order. A language listed twice shows twice as often.",
+      "visibleWhen": {
+        "key": "carousel",
+        "equals": true
+      },
+      "fields": [
+        {
+          "key": "language",
+          "type": "select",
+          "title": "Language",
+          "options": [
+            "English",
+            "Français",
+            "Deutsch",
+            "Nederlands",
+            "Italiano",
+            "Español",
+            "Português",
+            "Srpski (latinica)",
+            "Српски (ћирилица)",
+            "简体中文"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "carouselEvery",
+      "type": "select",
+      "title": "Change every",
+      "default": "1 hour",
+      "options": [
+        "5 minutes",
+        "1 hour",
+        "1 day"
+      ],
+      "group": "Clock",
+      "description": "On the clock's own boundaries: every five minutes, on the hour, or at midnight.",
+      "visibleWhen": {
+        "key": "carousel",
+        "equals": true
       }
     },
     {

@@ -86,6 +86,27 @@
     return { words: words, cells: cells, dots: minute % 5 };
   }
 
+  // The carousel's languages: the names in its setting, one per line as the
+  // plugin passes them, that a language file answers to (known), in the
+  // order given, repeats kept. Empty when there are none.
+  function carouselNames(text, known) {
+    if (typeof text !== 'string') return [];
+    return text.split('\n').filter(function (name) { return known.indexOf(name) >= 0; });
+  }
+
+  // Which of names shows at date. The slot is counted from the local date,
+  // not from when the page started, so a restart or a DST change lands on
+  // the same language: whole local days, then hours, then five minutes.
+  // every is '5 minutes', '1 hour' or '1 day'; anything else is an hour.
+  // Null when names is empty.
+  function carouselName(names, every, date) {
+    if (!names.length) return null;
+    var days = Math.round(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+    var slot = every === '1 day' ? days : days * 24 + date.getHours();
+    if (every === '5 minutes') slot = slot * 12 + Math.floor(date.getMinutes() / 5);
+    return names[((slot % names.length) + names.length) % names.length];
+  }
+
   // Everything wrong with a language file, as sentences; empty when it is
   // sound. The tests run it on every file; the screensaver refuses a file
   // that fails it rather than light the wrong cells.
@@ -130,7 +151,10 @@
     return out;
   }
 
-  var api = { at: at, wordsAt: wordsAt, withVariant: withVariant, variantNamed: variantNamed, settingKey: settingKey, problems: problems };
+  var api = {
+    at: at, wordsAt: wordsAt, withVariant: withVariant, variantNamed: variantNamed, settingKey: settingKey,
+    problems: problems, carouselNames: carouselNames, carouselName: carouselName
+  };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.WordClock = api;
 }(this));
