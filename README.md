@@ -1,5 +1,7 @@
 <p align="center"><img src="assets/icon.png" width="128" alt="Literal Clock icon"></p>
 
+<p align="center"><a href="https://ko-fi.com/missingfoss"><img src="https://img.shields.io/badge/Ko--fi-support-FF5E5B?logo=kofi&logoColor=white" alt="Support on Ko-fi"></a></p>
+
 # Literal Clock
 
 A word clock screensaver for [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite): a grid of letters where the words that tell the time light up, "IT IS TWENTY PAST FOUR", with four corner dots for the minutes in between.
@@ -35,6 +37,10 @@ Under **Plugin Manager → Literal Clock**:
 - **Slow drift**: moves the clock a little each minute, round a small circle once an hour.
 
 Choose **Literal Clock** under **Screensaver → Screensaver mode**. Kiosk Satellite decides when the screensaver shows; the clock redraws once a minute and does nothing in between. The letters use the system font, so no font is shipped.
+
+## Requirements
+
+Android 7.0 or newer, on any device where Kiosk Satellite can show a screensaver. (An Echo Dot running Kiosk Satellite has no screen, so no screensaver.)
 
 ## Installation
 
@@ -78,6 +84,10 @@ python3 tools/build.py --android-platform 35     # dist/literal-clock-<version>.
 The screensaver itself is `assets/clock/`: an HTML page, with `wordclock.js` turning a time into lit cells. The Java plugin only publishes the page with its settings.
 
 The icon's source is `art/icon.svg`. Render it with `rsvg-convert -w 256 -h 256 art/icon.svg -o assets/icon.png` (it needs the DejaVu Sans Bold font).
+
+## Support
+
+Literal Clock is free. If it keeps good time on your wall and you'd like to support its development, you can on [Ko-fi](https://ko-fi.com/missingfoss).
 
 ## Licence
 

@@ -140,6 +140,22 @@ test('each language with usage variants has its setting, and only those do', () 
   }
 });
 
+// Kiosk Satellite titles a list's rows by the field `row.title` names, or
+// else by the first `string` field; with neither, every row reads "Untitled".
+test('every list setting has a field its rows are titled by', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'kiosk-satellite-plugin.json'), 'utf8'));
+  const lists = manifest.settings.filter((s) => s.type === 'list');
+  assert.ok(lists.length > 0, 'the manifest has a list setting');
+  for (const list of lists) {
+    const key = list.row && list.row.title !== undefined
+      ? list.row.title
+      : (list.fields.find((f) => f.type === 'string') || {}).key;
+    assert.ok(list.fields.some((f) => f.key === key), `${list.key}: rows are titled by one of its fields`);
+  }
+  const carousel = manifest.settings.find((s) => s.key === 'carouselLanguages');
+  assert.strictEqual(carousel.row.title, 'language', 'a carousel row shows its language');
+});
+
 // The carousel: which language shows when, from the time alone.
 test('the carousel turns on the clock, from the local date, in list order', () => {
   const names = ['English', 'Français', 'Deutsch'];

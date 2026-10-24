@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "literal-clock",
   "name": "Literal Clock",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "apiVersion": 1,
   "minAndroidSdk": 24,
   "entryClass": "org.missing_foss.literalclock.LiteralClockPlugin",
@@ -128,6 +128,9 @@
       "type": "list",
       "title": "Carousel languages",
       "addTitle": "Add a language",
+      "row": {
+        "title": "language"
+      },
       "default": [],
       "maxItems": 10,
       "group": "Clock",
