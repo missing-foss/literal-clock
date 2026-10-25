@@ -18,10 +18,12 @@ html, body {
 }
 /* The carousel's change of language: out, then in, 0.6 s each way. */
 #face.fading { opacity: 0; }
+/* A wrapping row exactly --columns cells wide, not CSS Grid: Grid arrived in
+   Chromium 57, and an Android 7 WebView that was never updated is older. */
 #grid {
-  display: grid;
-  grid-template-columns: repeat(var(--columns, 11), var(--cell, 40px));
-  grid-auto-rows: var(--cell, 40px);
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(var(--columns, 11) * var(--cell, 40px));
   /* The system font: it covers every script the languages use, CJK included,
      and nothing is shipped. */
   font-family: sans-serif;
@@ -29,6 +31,11 @@ html, body {
   line-height: var(--cell, 40px);
   text-align: center;
   color: var(--unlit, #262626);
+}
+#grid span {
+  flex: 0 0 var(--cell, 40px);
+  width: var(--cell, 40px);
+  height: var(--cell, 40px);
 }
 #grid span.lit { color: var(--lit, #ffffff); }
 .dot {

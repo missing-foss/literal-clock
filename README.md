@@ -6,6 +6,24 @@
 
 A word clock screensaver for [Kiosk Satellite](https://github.com/jxlarrea/kiosk-satellite): a grid of letters where the words that tell the time light up, "IT IS TWENTY PAST FOUR", with four corner dots for the minutes in between.
 
+<!-- screenshots:start -->
+## Screenshots
+
+<p align="center"><img src="docs/screenshots/english.webp" alt="Literal Clock at 10:47. Every setting at its default"><br><sub>Every setting at its default</sub></p>
+
+<table>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/francais.webp" alt="Literal Clock at 10:47. Language: Français"><br><sub>Language: Français</sub></td><td width="50%" valign="top"><img src="docs/screenshots/deutsch.webp" alt="Literal Clock at 10:47. Language: Deutsch · Quarter hours: viertel vier, dreiviertel vier"><br><sub>Language: Deutsch · Quarter hours: viertel vier, dreiviertel vier</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/nederlands.webp" alt="Literal Clock at 10:47. Language: Nederlands"><br><sub>Language: Nederlands</sub></td><td width="50%" valign="top"><img src="docs/screenshots/espanol.webp" alt="Literal Clock at 10:47. Language: Español"><br><sub>Language: Español</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/portugues-brasil.webp" alt="Literal Clock at 10:47. Language: Português · Portugal or Brazil: Brasil (quinze, para as)"><br><sub>Language: Português · Portugal or Brazil: Brasil (quinze, para as)</sub></td><td width="50%" valign="top"><img src="docs/screenshots/italiano.webp" alt="Literal Clock at 10:47. Language: Italiano"><br><sub>Language: Italiano</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/srpski-latinica.webp" alt="Literal Clock at 10:47. Language: Srpski (latinica)"><br><sub>Language: Srpski (latinica)</sub></td><td width="50%" valign="top"><img src="docs/screenshots/srpski-cirilica.webp" alt="Literal Clock at 10:47. Language: Српски (ћирилица)"><br><sub>Language: Српски (ћирилица)</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/zh-hans.webp" alt="Literal Clock at 10:47. Language: 简体中文"><br><sub>Language: 简体中文</sub></td><td width="50%" valign="top"><img src="docs/screenshots/custom-colours.webp" alt="Literal Clock at 10:47. Lit letters: #FFC872 · Unlit letters: #1D2B45 · Background: #0B1426"><br><sub>Lit letters: #FFC872 · Unlit letters: #1D2B45 · Background: #0B1426</sub></td></tr>
+<tr><td width="50%" valign="top"><img src="docs/screenshots/smaller-no-dots.webp" alt="Literal Clock at 10:47. Size: 60 % · Minute dots: off"><br><sub>Size: 60 % · Minute dots: off</sub></td><td width="50%" valign="top"><img src="docs/screenshots/carousel.webp" alt="Literal Clock, animated. Language carousel: on · Change every: 5 minutes · Carousel languages: English, Français, Deutsch"><br><sub>Language carousel: on · Change every: 5 minutes · Carousel languages: English, Français, Deutsch</sub></td></tr>
+<tr><td colspan="2" align="center"><img src="docs/screenshots/small-screen.webp" width="480" alt="Literal Clock at 10:47. 960 × 480 screen · Every setting at its default"><br><sub>960 × 480 screen · Every setting at its default</sub></td></tr>
+</table>
+
+All at 10:47, with Slow drift off; every other setting at its default. Regenerate with `python3 tools/screenshots.py`.
+<!-- screenshots:end -->
+
 ## Languages
 
 | Language | Grid | Usage choices |
@@ -60,7 +78,7 @@ Or search for `Literal Clock` in **Settings > Plugin Manager > Browse plugins** 
 
 ### From a ZIP
 
-For testing, build the ZIP (below) and use **Plugin Manager → Developer Tools → Install from ZIP**.
+For testing, build the ZIP (below) and use **Plugin Manager → Developer Tools → Install from ZIP**. Each CI run also keeps the package as its `literal-clock-plugin` artifact; the downloaded file installs as it is, without unzipping.
 
 ## Data
 
@@ -80,6 +98,8 @@ python3 tools/build.py --android-platform 35     # dist/literal-clock-<version>.
 - the plugin against the SDK;
 - the clock for every minute of the day in every language and usage, against the reviewed sentences in `tests/expected/`;
 - the build tools' own tests.
+
+`tools/screenshots.py` renders the Screenshots above from `assets/clock/` at a fixed time, and rewrites their captions from the settings each shot uses. It needs Chromium (or Chrome) and ffmpeg with libwebp; run it again when the face changes.
 
 The screensaver itself is `assets/clock/`: an HTML page, with `wordclock.js` turning a time into lit cells. The Java plugin only publishes the page with its settings.
 

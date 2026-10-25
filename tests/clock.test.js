@@ -156,6 +156,15 @@ test('every list setting has a field its rows are titled by', () => {
   assert.strictEqual(carousel.row.title, 'language', 'a carousel row shows its language');
 });
 
+// The page has to lay out in an Android 7 WebView that was never updated
+// (Chromium 52), which has no CSS Grid: the letters would run on one line.
+test('the face is laid out without CSS Grid', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'assets', 'clock', 'clock.css'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.doesNotMatch(css, /display\s*:\s*(inline-)?grid\b/, 'no display: grid');
+  assert.doesNotMatch(css, /\bgrid-(template|auto|column|row|area)/, 'no grid placement properties');
+});
+
 // The carousel: which language shows when, from the time alone.
 test('the carousel turns on the clock, from the local date, in list order', () => {
   const names = ['English', 'Français', 'Deutsch'];
