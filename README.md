@@ -58,7 +58,7 @@ Choose **Literal Clock** under **Screensaver → Screensaver mode**. Kiosk Satel
 
 ## Requirements
 
-Android 7.0 or newer, on any device where Kiosk Satellite can show a screensaver. (An Echo Dot running Kiosk Satellite has no screen, so no screensaver.)
+Android 7.0 or newer, on any device where Kiosk Satellite can show a screensaver. (An Echo Dot running Kiosk Satellite has no screen, so no screensaver.) Kiosk Satellite 2026.10.23 or newer.
 
 ## Installation
 
