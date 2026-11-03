@@ -35,8 +35,8 @@ All at 10:47, with Slow drift off; every other setting at its default. Regenerat
 | Italiano | 11×12 | *mezzogiorno, mezzanotte* (default) or *sono le dodici* |
 | Español | 11×11 | *son las tres* (default) or *son las tres en punto* |
 | Português † | 16×9 | *Portugal (um quarto, menos)* (default) or *Brasil (quinze, para as)* |
-| Srpski (latinica) † | 15×9 | |
-| Српски (ћирилица) † | 15×9 | |
+| Srpski (latinica) | 16×9 | |
+| Српски (ћирилица) | 16×9 | |
 | 简体中文 | 6×6 | *一刻, 三刻* (default), *四十五分* or *差五分* |
 
 † Unverified: the wording still waits for a native speaker's check.
